@@ -19,9 +19,11 @@
 @synthesize tableView = _tableView;
 @synthesize searchTimer = _searchTimer;
 @synthesize delegate = _delegate;
+@synthesize nameTest = _nameTest;
 
 -(void)dealloc
 {
+    [_nameTest release];
     if ([_searchTimer isValid]) {
         [_searchTimer invalidate];
     }
@@ -58,6 +60,7 @@
 {
     [super viewWillAppear:animated];
     [self.resultArray removeAllObjects];
+    [self setTitle:_nameTest];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

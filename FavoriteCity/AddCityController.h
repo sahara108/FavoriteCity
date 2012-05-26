@@ -21,5 +21,6 @@
 @property (nonatomic, retain) NSTimer *searchTimer;
 @property (nonatomic, assign) id<AddCityDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, retain) NSString *nameTest;
 
 @end

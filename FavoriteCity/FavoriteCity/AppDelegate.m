@@ -32,11 +32,17 @@
     
     RootViewController *viewController = [[RootViewController alloc] initWithNibName:@"RootViewController" bundle:nil];
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:viewController];
-    [viewController release];
+    
+    NSManagedObjectContext *context = [self managedObjectContext];
+	if (!context) {
+		// Handle the error.
+	}
+    viewController.managedObjectContext = context;
     self.window.rootViewController = navi;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    [viewController release];
     return YES;
 }
 

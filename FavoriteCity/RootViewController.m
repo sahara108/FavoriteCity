@@ -8,6 +8,7 @@
 
 #import "RootViewController.h"
 #import "DetailViewController.h"
+#import "City.h"
 
 @interface RootViewController ()
 
@@ -18,6 +19,7 @@
 @synthesize tableView = _tableView;
 @synthesize dataArray = _dataArray;
 @synthesize addController = _addController;
+@synthesize managedObjectContext = _managedObjectContext;
 
 -(void)dealloc
 {
@@ -62,6 +64,48 @@
         _addController = [[AddCityController alloc] initWithNibName:@"AddCityController" bundle:nil];
         _addController.delegate = self;
     }
+    City *addCity = (City *)[NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:_managedObjectContext];
+	
+    
+    [addCity setName:@"City one"];
+    [addCity setLat:[NSNumber numberWithDouble:100]];
+    [addCity setLog:[NSNumber numberWithDouble:100]];
+	
+	
+	
+	// Commit the change.
+	NSError *error;
+	if (![_managedObjectContext save:&error]) {
+		// Handle the error.
+	}else {
+        NSLog(@"done");
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"City" inManagedObjectContext:_managedObjectContext];
+        [request setEntity:entity];
+        
+       
+        
+        // Execute the fetch -- create a mutable copy of the result.
+        NSError *error = nil;
+        NSMutableArray *mutableFetchResults = [[_managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        if (mutableFetchResults == nil) {
+            // Handle the error.
+        }
+        
+        // Set self's events array to the mutable array, then clean up.
+        if (mutableFetchResults) {
+             City *temp = [mutableFetchResults objectAtIndex:0];
+            _addController.nameTest = [NSString stringWithFormat:@"%@",[temp name]];
+        }
+       
+        [mutableFetchResults release];
+        [request release];
+
+    }
+	
+
+
+        
     [self.navigationController pushViewController:_addController animated:YES];
 }
 
