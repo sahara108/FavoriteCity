@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "AddCityController.h"
+#import "CityProvider.h"
 
-@interface RootViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,AddCityDelegate>
+@interface RootViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,AddCityDelegate,CityProviderParseJSonDelegate>
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *dataArray;
 @property (nonatomic, retain) AddCityController *addController;
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;	    
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;	  
+@property (nonatomic, retain) CityProvider *requestFavoriteCity;
 
 @end

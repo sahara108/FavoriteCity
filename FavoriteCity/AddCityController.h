@@ -22,5 +22,7 @@
 @property (nonatomic, assign) id<AddCityDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, retain) NSString *nameTest;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;	  
+@property (nonatomic, retain) NSMutableArray *dataSourceCities;
 
 @end
