@@ -23,9 +23,11 @@
 @synthesize nameTest = _nameTest;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize dataSourceCities ;
+@synthesize detailViewController;
 
 -(void)dealloc
 {
+    [detailViewController release];
     [_managedObjectContext release];
     [dataSourceCities release];
     [_nameTest release];
@@ -45,6 +47,7 @@
     if (self) {
         // Custom initialization
         self.dataSourceCities =[NSMutableArray array];
+        self.resultArray = [NSMutableArray array];
         
     }
     return self;
@@ -66,7 +69,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.resultArray removeAllObjects];
+//    [self.resultArray removeAllObjects];
     [self setTitle:_nameTest];
 }
 
@@ -77,12 +80,22 @@
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    if ([_searchTimer isValid]) {
-        [_searchTimer invalidate];
-    }
-    self.searchTimer = nil;
+//    if ([_searchTimer isValid]) {
+//        [_searchTimer invalidate];
+//    }
+//    self.searchTimer = nil;
+//    
+//    self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(performSearch:) userInfo:searchText repeats:NO];
     
-    self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(performSearch:) userInfo:searchText repeats:NO];
+    for(NSDictionary *dictCity in dataSourceCities)
+    {
+        NSString *name = [dictCity objectForKey:@"name"];
+        if ([name hasPrefix:searchText]) {
+            [self.resultArray addObject:dictCity];
+        }
+    }
+    [self.tableView reloadData];
+   
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -93,6 +106,7 @@
 -(void)performSearch:(NSString*)searchText
 {
     //TODO:
+    
 }
 #pragma makr -
 #pragma mark Table View Delegate
@@ -103,26 +117,19 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (dataSourceCities) {
-//        if ([dataSourceCities count]>0) {
-//            return 1;
-//        }
-        return  [dataSourceCities count];
-    }
+    
     return [self.resultArray count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"City_List"];
-    if (cell != nil) {
+    if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"City_List"] autorelease];
     }
-    if (dataSourceCities) {
-        NSDictionary *dictCity = [dataSourceCities objectAtIndex:indexPath.row];
+    if (self.resultArray&& [self.resultArray count]>0) {
+        NSDictionary *dictCity = [self.resultArray objectAtIndex:indexPath.row];
         if (dictCity) {
-            NSLog(@"%@ --- %@--- %@",[dictCity objectForKey:@"name"],[dictCity objectForKey:@"lat"],[dictCity objectForKey:@"log"]);
-            cell.detailTextLabel.text =[NSString stringWithFormat:@"lattidude: %@ longtitude :%@",[dictCity objectForKey:@"lat"],[dictCity objectForKey:@"log"]];
             cell.textLabel.text = [NSString stringWithFormat:@"%@",[dictCity objectForKey:@"name"]];
         }
     }
@@ -135,7 +142,18 @@
 {
     //TODO:
     [self.searchBar resignFirstResponder];
-    [self.delegate didAddCity:nil];
+//    [self.delegate didAddCity:nil];
+    NSDictionary *dictCity = [self.resultArray objectAtIndex:indexPath.row];
+    
+    if (!detailViewController) {
+        detailViewController =[[DetailCityViewController alloc]initWithNibName:@"DetailCityViewController" bundle:nil];
+    }
+    if (dictCity) {
+        detailViewController.dictCity = dictCity;
+        [self.navigationController pushViewController:detailViewController animated:YES];
+        
+    }
+    
 }
 
 @end

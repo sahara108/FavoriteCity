@@ -137,9 +137,10 @@
             NSDictionary *dictCity = [jResult objectAtIndex:i];
             if (dictCity) {
                 NSDictionary *dictResult = [NSDictionary dictionaryWithObjectsAndKeys:
-                                            [dictCity objectForKey:@"county_name"],@"county_name",
+                                            [dictCity objectForKey:@"name"],@"name",
                                             [dictCity objectForKey:@"primary_latitude"],@"primary_latitude",
                                             [dictCity objectForKey:@"primary_longitude"],@"primary_longitude",
+                                            [dictCity objectForKey:@"state_name"],@"state_name",
                                             nil];
                 [self.resultContent addObject: dictResult];
             }

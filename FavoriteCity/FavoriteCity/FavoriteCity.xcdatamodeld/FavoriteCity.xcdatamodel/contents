@@ -4,8 +4,9 @@
         <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="log" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="City" positionX="-63" positionY="-27" width="128" height="90"/>
+        <element name="City" positionX="-63" positionY="-27" width="128" height="105"/>
     </elements>
 </model>

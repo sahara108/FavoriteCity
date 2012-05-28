@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DetailCityViewController.h"
 
 @protocol AddCityDelegate <NSObject>
 
@@ -24,5 +25,6 @@
 @property (nonatomic, retain) NSString *nameTest;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;	  
 @property (nonatomic, retain) NSMutableArray *dataSourceCities;
+@property (nonatomic, retain) DetailCityViewController *detailViewController;
 
 @end

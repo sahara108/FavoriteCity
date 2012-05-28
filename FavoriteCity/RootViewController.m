@@ -210,7 +210,8 @@
             double t1 = temp.doubleValue;
             NSNumber *temp2 = [dictCity objectForKey:@"primary_longitude"];
             double t2 = temp2.doubleValue;
-            [addCity setName:[dictCity objectForKey:@"county_name"]];
+            [addCity setName:[dictCity objectForKey:@"name"]];
+            [addCity setState:[dictCity objectForKey:@"state_name"]];
             [addCity setLat:[NSNumber numberWithDouble:t1]];
             [addCity setLog:[NSNumber numberWithDouble:t2]];
             NSError *error;
@@ -242,6 +243,7 @@
                                           [element name],@"name",
                                           [element lat],@"lat",
                                           [element log],@"log",
+                                          [element state],@"state",
                                            nil];
                 [array addObject:dictCity];
             }

@@ -19,6 +19,14 @@
 		1C112ED81571F26D00721E22 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C112ECB1571F26D00721E22 /* SBJsonTokeniser.m */; };
 		1C112ED91571F26D00721E22 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C112ECD1571F26D00721E22 /* SBJsonUTF8Stream.m */; };
 		1C112EDA1571F26D00721E22 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C112ECF1571F26D00721E22 /* SBJsonWriter.m */; };
+		1C8DF0E21573C17C00DD140B /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8DF0E11573C17C00DD140B /* City.m */; };
+		1C8DF0EC1573C5FE00DD140B /* DetailCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8DF0EA1573C5FE00DD140B /* DetailCityViewController.m */; };
+		1C8DF0ED1573C5FE00DD140B /* DetailCityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8DF0EB1573C5FE00DD140B /* DetailCityViewController.xib */; };
+		1C8DF0EF1573C83400DD140B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8DF0EE1573C83400DD140B /* MapKit.framework */; };
+		1C8DF0F31573C84C00DD140B /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8DF0F11573C84C00DD140B /* MapViewController.m */; };
+		1C8DF0F41573C84C00DD140B /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C8DF0F21573C84C00DD140B /* MapViewController.xib */; };
+		1C8DF0FB1573CB7100DD140B /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C8DF0FA1573CB7100DD140B /* CustomAnnotation.m */; };
+		1C8DF0FD1573CC5F00DD140B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8DF0FC1573CC5F00DD140B /* CoreLocation.framework */; };
 		AB042BFD1570B9D9000858D2 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB042BFB1570B9D9000858D2 /* DetailViewController.m */; };
 		AB042BFE1570B9D9000858D2 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB042BFC1570B9D9000858D2 /* DetailViewController.xib */; };
 		AB042C081570BAC4000858D2 /* AddCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB042C061570BAC4000858D2 /* AddCityController.m */; };
@@ -61,6 +69,18 @@
 		1C112ECD1571F26D00721E22 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		1C112ECE1571F26D00721E22 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		1C112ECF1571F26D00721E22 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		1C8DF0E01573C17C00DD140B /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		1C8DF0E11573C17C00DD140B /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
+		1C8DF0E91573C5FE00DD140B /* DetailCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailCityViewController.h; sourceTree = "<group>"; };
+		1C8DF0EA1573C5FE00DD140B /* DetailCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailCityViewController.m; sourceTree = "<group>"; };
+		1C8DF0EB1573C5FE00DD140B /* DetailCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailCityViewController.xib; sourceTree = "<group>"; };
+		1C8DF0EE1573C83400DD140B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1C8DF0F01573C84C00DD140B /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		1C8DF0F11573C84C00DD140B /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		1C8DF0F21573C84C00DD140B /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		1C8DF0F91573CB7100DD140B /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
+		1C8DF0FA1573CB7100DD140B /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
+		1C8DF0FC1573CC5F00DD140B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AB042BFA1570B9D9000858D2 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		AB042BFB1570B9D9000858D2 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		AB042BFC1570B9D9000858D2 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
@@ -89,6 +109,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C8DF0FD1573CC5F00DD140B /* CoreLocation.framework in Frameworks */,
+				1C8DF0EF1573C83400DD140B /* MapKit.framework in Frameworks */,
 				ABE2F3E01570B690002E5BA2 /* UIKit.framework in Frameworks */,
 				ABE2F3E21570B690002E5BA2 /* Foundation.framework in Frameworks */,
 				ABE2F3E41570B690002E5BA2 /* CoreGraphics.framework in Frameworks */,
@@ -141,6 +163,16 @@
 		ABE2F3D01570B690002E5BA2 = {
 			isa = PBXGroup;
 			children = (
+				1C8DF0FC1573CC5F00DD140B /* CoreLocation.framework */,
+				1C8DF0F91573CB7100DD140B /* CustomAnnotation.h */,
+				1C8DF0FA1573CB7100DD140B /* CustomAnnotation.m */,
+				1C8DF0F01573C84C00DD140B /* MapViewController.h */,
+				1C8DF0F11573C84C00DD140B /* MapViewController.m */,
+				1C8DF0F21573C84C00DD140B /* MapViewController.xib */,
+				1C8DF0EE1573C83400DD140B /* MapKit.framework */,
+				1C8DF0E91573C5FE00DD140B /* DetailCityViewController.h */,
+				1C8DF0EA1573C5FE00DD140B /* DetailCityViewController.m */,
+				1C8DF0EB1573C5FE00DD140B /* DetailCityViewController.xib */,
 				1C112EB81571F26D00721E22 /* SBJSON */,
 				1C112EB31571F26300721E22 /* Parse */,
 				AB042C051570BAC4000858D2 /* AddCityController.h */,
@@ -180,6 +212,8 @@
 				ABE2F3F01570B690002E5BA2 /* AppDelegate.h */,
 				ABE2F3F11570B690002E5BA2 /* AppDelegate.m */,
 				ABE2F3F31570B690002E5BA2 /* FavoriteCity.xcdatamodeld */,
+				1C8DF0E01573C17C00DD140B /* City.h */,
+				1C8DF0E11573C17C00DD140B /* City.m */,
 				ABE2F3E81570B690002E5BA2 /* Supporting Files */,
 				ABE2F3FB1570B6A8002E5BA2 /* RootViewController.h */,
 				ABE2F3FC1570B6A8002E5BA2 /* RootViewController.m */,
@@ -253,6 +287,8 @@
 				ABE2F3FF1570B6A8002E5BA2 /* RootViewController.xib in Resources */,
 				AB042BFE1570B9D9000858D2 /* DetailViewController.xib in Resources */,
 				AB042C091570BAC4000858D2 /* AddCityController.xib in Resources */,
+				1C8DF0ED1573C5FE00DD140B /* DetailCityViewController.xib in Resources */,
+				1C8DF0F41573C84C00DD140B /* MapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +317,10 @@
 				1C112ED81571F26D00721E22 /* SBJsonTokeniser.m in Sources */,
 				1C112ED91571F26D00721E22 /* SBJsonUTF8Stream.m in Sources */,
 				1C112EDA1571F26D00721E22 /* SBJsonWriter.m in Sources */,
+				1C8DF0E21573C17C00DD140B /* City.m in Sources */,
+				1C8DF0EC1573C5FE00DD140B /* DetailCityViewController.m in Sources */,
+				1C8DF0F31573C84C00DD140B /* MapViewController.m in Sources */,
+				1C8DF0FB1573CB7100DD140B /* CustomAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
