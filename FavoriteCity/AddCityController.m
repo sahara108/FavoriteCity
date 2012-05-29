@@ -69,7 +69,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self.resultArray removeAllObjects];
+    if (self.resultArray) {
+        [self.resultArray removeAllObjects];
+    }
+    [self.searchBar becomeFirstResponder];
     [self setTitle:_nameTest];
 }
 
@@ -86,7 +89,9 @@
 //    self.searchTimer = nil;
 //    
 //    self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(performSearch:) userInfo:searchText repeats:NO];
-    
+    if (self.resultArray) {
+        [self.resultArray removeAllObjects];
+    }
     for(NSDictionary *dictCity in dataSourceCities)
     {
         NSString *name = [dictCity objectForKey:@"name"];

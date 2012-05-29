@@ -16,9 +16,13 @@
 @synthesize dictCity;
 @synthesize lblLat,lblLong,lblState,lblName;
 @synthesize mapViewController;
+@synthesize arrayDataFavoriteCities;
+@synthesize btnAdd;
 
 -(void)dealloc
 {
+    [btnAdd release];
+    [arrayDataFavoriteCities release];
     [mapViewController release];
     [lblLat release];
     [lblName release];
@@ -26,6 +30,24 @@
     [lblState release];
     [dictCity release];
     [super dealloc];
+}
+-(IBAction)addCity:(id)sender
+{
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if (dictCity) {
+        if (![arrayDataFavoriteCities containsObject:dictCity]) {
+            [arrayDataFavoriteCities addObject:dictCity];
+        }
+        
+    }
+    [userDefault setObject:arrayDataFavoriteCities forKey:@"favoriteCities"];
+    [userDefault synchronize];
+    [self performSelector:@selector(backToRootView) withObject:nil afterDelay:2];
+
+}
+-(void) backToRootView
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(IBAction)viewInMap:(id)sender
 {
@@ -47,6 +69,11 @@
         lblLong.text = [NSString stringWithFormat:@"%@",[dictCity objectForKey:@"log"]];
         lblState.text = [dictCity objectForKey:@"state"];
         lblName.text  =[dictCity objectForKey:@"name"];
+        if ([arrayDataFavoriteCities containsObject:dictCity]) {
+            self.btnAdd.hidden = YES;
+        }else {
+            self.btnAdd.hidden =  NO;
+        }
         
     }
 }
@@ -55,6 +82,11 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        self.arrayDataFavoriteCities = [userDefault objectForKey:@"favoriteCities"];  
+        if (!arrayDataFavoriteCities) {
+            self.arrayDataFavoriteCities = [NSMutableArray array];
+        }
     }
     return self;
 }

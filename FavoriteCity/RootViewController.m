@@ -21,9 +21,15 @@
 @synthesize addController = _addController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize requestFavoriteCity = _requestFavoriteCity;
+@synthesize dataSourceCities;
+@synthesize arrayDataFavoriteCities;
+@synthesize detailCityViewController;
 
 -(void)dealloc
 {
+    [detailCityViewController release];
+    [arrayDataFavoriteCities release];
+    [dataSourceCities release];
     [_requestFavoriteCity release];
     [_addController release];
     [_tableView release];
@@ -37,6 +43,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+      
     }
     return self;
 }
@@ -45,6 +52,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self loadNewData];
 }
 
 - (void)viewDidUnload
@@ -56,6 +64,7 @@
 
 -(void)enableEdit:(id)sender
 {
+    [self.tableView setEditing:YES animated:YES];
     //TODO:
 }
 -(void) deleteAllCities
@@ -85,54 +94,50 @@
         _addController = [[AddCityController alloc] initWithNibName:@"AddCityController" bundle:nil];
         _addController.delegate = self;
     }
-    City *addCity = (City *)[NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:_managedObjectContext];
+//    City *addCity = (City *)[NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:_managedObjectContext];
+//	
+//    
+//    [addCity setName:@"City one"];
+//    [addCity setLat:[NSNumber numberWithDouble:100]];
+//    [addCity setLog:[NSNumber numberWithDouble:100]];
+//	
+//	
+//	
+//	// Commit the change.
+//	NSError *error;
+//	if (![_managedObjectContext save:&error]) {
+//		// Handle the error.
+//	}else {
+//        NSLog(@"done");
+//        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+//        NSEntityDescription *entity = [NSEntityDescription entityForName:@"City" inManagedObjectContext:_managedObjectContext];
+//        [request setEntity:entity];
+//        
+//       
+//        
+//        // Execute the fetch -- create a mutable copy of the result.
+//        NSError *error = nil;
+//        NSMutableArray *mutableFetchResults = [[_managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+//        if (mutableFetchResults == nil) {
+//            // Handle the error.
+//        }
+//        
+//        // Set self's events array to the mutable array, then clean up.
+//        if (mutableFetchResults) {
+//             City *temp = [mutableFetchResults objectAtIndex:0];
+//            _addController.nameTest = [NSString stringWithFormat:@"%@",[temp name]];
+//        }
+//        [self deleteAllCities];
+//        [mutableFetchResults release];
+//        [request release];
+//        
+//        
+//
+//    }
 	
-    
-    [addCity setName:@"City one"];
-    [addCity setLat:[NSNumber numberWithDouble:100]];
-    [addCity setLog:[NSNumber numberWithDouble:100]];
-	
-	
-	
-	// Commit the change.
-	NSError *error;
-	if (![_managedObjectContext save:&error]) {
-		// Handle the error.
-	}else {
-        NSLog(@"done");
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"City" inManagedObjectContext:_managedObjectContext];
-        [request setEntity:entity];
-        
-       
-        
-        // Execute the fetch -- create a mutable copy of the result.
-        NSError *error = nil;
-        NSMutableArray *mutableFetchResults = [[_managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-        if (mutableFetchResults == nil) {
-            // Handle the error.
-        }
-        
-        // Set self's events array to the mutable array, then clean up.
-        if (mutableFetchResults) {
-             City *temp = [mutableFetchResults objectAtIndex:0];
-            _addController.nameTest = [NSString stringWithFormat:@"%@",[temp name]];
-        }
-        [self deleteAllCities];
-        [mutableFetchResults release];
-        [request release];
-        if (!_requestFavoriteCity) {
-            _requestFavoriteCity = [[CityProvider alloc]init];
-            _requestFavoriteCity.delegateJson = self;
-        }
-            
-        [_requestFavoriteCity configURL];
-        [_requestFavoriteCity requestData];
-        
-
+    if (dataSourceCities) {
+        _addController.dataSourceCities = self.dataSourceCities;
     }
-	
-
 
         
     [self.navigationController pushViewController:_addController animated:YES];
@@ -148,8 +153,64 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addCity:)];
     self.navigationItem.rightBarButtonItem = addButton;
     [addButton release];
+    
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    arrayDataFavoriteCities = [userDefault objectForKey:@"favoriteCities"];
+    if (!arrayDataFavoriteCities) {
+        //            self.arrayDataFavoriteCities = [NSMutableArray array];
+    }
+    [self.tableView reloadData];
 }
+-(void)loadNewData
+{
+    if (!_requestFavoriteCity) {
+        _requestFavoriteCity = [[CityProvider alloc]init];
+        _requestFavoriteCity.delegateJson = self;
+    }
+    
+    [_requestFavoriteCity configURL];
+    [_requestFavoriteCity requestData];
+}
+-(void) getDataSoureFromCoreData
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"City" inManagedObjectContext:_managedObjectContext];
+    [request setEntity:entity];
+    
+    
+    
+    // Execute the fetch -- create a mutable copy of the result.
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[_managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil) {
+        // Handle the error.
+    }
+    
+    // Set self's events array to the mutable array, then clean up.
+    if (mutableFetchResults) {
+        NSMutableArray *array = [NSMutableArray array];
+        for(City *element in mutableFetchResults)
+        {
+            NSDictionary *dictCity = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [element name],@"name",
+                                      [element lat],@"lat",
+                                      [element log],@"log",
+                                      [element state],@"state",
+                                      nil];
+            [array addObject:dictCity];
+        }
+        if (dataSourceCities) {
+            [dataSourceCities removeAllObjects];
+        }
+        self.dataSourceCities = [NSMutableArray arrayWithArray:array];
+        //        _addController.dataSourceCities = [NSMutableArray arrayWithArray:array];
+        //        [_addController.tableView reloadData];
+        
+        [mutableFetchResults release];
+        [request release];
+    }
 
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
@@ -157,25 +218,46 @@
 
 #pragma mark
 #pragma mark TableView
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    arrayDataFavoriteCities = [[userDefault objectForKey:@"favoriteCities"] mutableCopy];
+    NSDictionary *dictCity = [arrayDataFavoriteCities objectAtIndex:indexPath.row];
+    if ([arrayDataFavoriteCities isKindOfClass:[NSMutableArray class]]&&dictCity) {
+        [arrayDataFavoriteCities removeObject:dictCity];
+        [userDefault setObject:arrayDataFavoriteCities forKey:@"favoriteCities"];
+        [userDefault synchronize];
+    }
+    [self.tableView setEditing:NO animated:YES];
+    [self.tableView reloadData];
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+   
+}
+ -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView    
 {
     return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (arrayDataFavoriteCities) {
+        return [arrayDataFavoriteCities count];
+    }
     return [self.dataArray count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"City_List"];
-    if (cell != nil) {
+    if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"City_List"] autorelease];
     }
-    
-    //TODO:
+    if (self.arrayDataFavoriteCities&& [self.arrayDataFavoriteCities count]>0) {
+        NSDictionary *dictCity = [self.arrayDataFavoriteCities objectAtIndex:indexPath.row];
+        if (dictCity) {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@",[dictCity objectForKey:@"name"]];
+        }
+    }
     
     return cell;
 }
@@ -184,10 +266,17 @@
 {
     //TODO:
     //push detailtableView
-    DetailViewController *detail = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
+    if (!detailCityViewController) {
+        detailCityViewController = [[DetailCityViewController alloc]initWithNibName:@"DetailCityViewController" bundle:nil];
+    }
     
-    [self.navigationController pushViewController:detail animated:YES];
-    [detail release];
+    NSDictionary *dictCity = [arrayDataFavoriteCities objectAtIndex:indexPath.row];
+    if (dictCity) {
+        detailCityViewController.dictCity = dictCity;
+        [self.navigationController pushViewController:detailCityViewController animated:YES];
+
+    }
+     
 }
 
 #pragma mark
@@ -198,61 +287,47 @@
     //TODO:
 }
 #pragma mark-
-#pragma mark City Provider Delegatte
+#pragma mark City Provider Delegate
 -(void)CityProviderDidFinishParseJSon:(CityProvider *)provider
 {
+    
+    [self getDataSoureFromCoreData];
     if (provider.resultContent) {
         for( NSDictionary *dictCity in provider.resultContent)
         {
-            City *addCity = (City *)[NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:_managedObjectContext];
+            BOOL needAdd = YES;
             
-            NSNumber *temp = [dictCity objectForKey:@"primary_latitude"];
-            double t1 = temp.doubleValue;
-            NSNumber *temp2 = [dictCity objectForKey:@"primary_longitude"];
-            double t2 = temp2.doubleValue;
-            [addCity setName:[dictCity objectForKey:@"name"]];
-            [addCity setState:[dictCity objectForKey:@"state_name"]];
-            [addCity setLat:[NSNumber numberWithDouble:t1]];
-            [addCity setLog:[NSNumber numberWithDouble:t2]];
-            NSError *error;
-            if (![_managedObjectContext save:&error]) {
-                // Handle the error.
-            }else {
-                NSLog(@"insert successfull %@",[addCity name]);
-            }
-        }
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"City" inManagedObjectContext:_managedObjectContext];
-        [request setEntity:entity];
-        
-        
-        
-        // Execute the fetch -- create a mutable copy of the result.
-        NSError *error = nil;
-        NSMutableArray *mutableFetchResults = [[_managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-        if (mutableFetchResults == nil) {
-            // Handle the error.
-        }
-        
-        // Set self's events array to the mutable array, then clean up.
-        if (mutableFetchResults) {
-            NSMutableArray *array = [NSMutableArray array];
-            for(City *element in mutableFetchResults)
+            for(NSDictionary *dictCityExist in self.dataSourceCities)
             {
-                NSDictionary *dictCity = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          [element name],@"name",
-                                          [element lat],@"lat",
-                                          [element log],@"log",
-                                          [element state],@"state",
-                                           nil];
-                [array addObject:dictCity];
+                if ([[dictCityExist objectForKey:@"name"]isEqual:[dictCity objectForKey:@"name"]]) {
+                    needAdd = NO;
+                    break;
+                }
             }
-            _addController.dataSourceCities = [NSMutableArray arrayWithArray:array];
-            [_addController.tableView reloadData];
+            if (needAdd) {
+                
+                City *addCity = (City *)[NSEntityDescription insertNewObjectForEntityForName:@"City" inManagedObjectContext:_managedObjectContext];
+                
+                NSNumber *temp = [dictCity objectForKey:@"primary_latitude"];
+                double t1 = temp.doubleValue;
+                NSNumber *temp2 = [dictCity objectForKey:@"primary_longitude"];
+                double t2 = temp2.doubleValue;
+                [addCity setName:[dictCity objectForKey:@"name"]];
+                [addCity setState:[dictCity objectForKey:@"state_name"]];
+                [addCity setLat:[NSNumber numberWithDouble:t1]];
+                [addCity setLog:[NSNumber numberWithDouble:t2]];
+                NSError *error;
+                if (![_managedObjectContext save:&error]) {
+                    // Handle the error.
+                }else {
+                    NSLog(@"insert successfull %@",[addCity name]);
+                }
+
+            }
         }
+        [self getDataSoureFromCoreData];
+        [self.tableView reloadData];
         
-        [mutableFetchResults release];
-        [request release];
         
         
     }

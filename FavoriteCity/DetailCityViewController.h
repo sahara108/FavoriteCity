@@ -17,6 +17,9 @@
 @property (nonatomic, retain) IBOutlet UILabel *lblState;
 @property (nonatomic, retain) IBOutlet UILabel *lblName;
 @property (nonatomic, retain) MapViewController *mapViewController;
+@property (nonatomic, retain) NSMutableArray *arrayDataFavoriteCities;
+@property (nonatomic, retain) IBOutlet UIButton *btnAdd;
 
 -(IBAction)viewInMap:(id)sender;
+-(IBAction)addCity:(id)sender;
 @end
