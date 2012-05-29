@@ -169,7 +169,6 @@
 				1C8DF0F01573C84C00DD140B /* MapViewController.h */,
 				1C8DF0F11573C84C00DD140B /* MapViewController.m */,
 				1C8DF0F21573C84C00DD140B /* MapViewController.xib */,
-				1C8DF0EE1573C83400DD140B /* MapKit.framework */,
 				1C8DF0E91573C5FE00DD140B /* DetailCityViewController.h */,
 				1C8DF0EA1573C5FE00DD140B /* DetailCityViewController.m */,
 				1C8DF0EB1573C5FE00DD140B /* DetailCityViewController.xib */,
@@ -198,6 +197,7 @@
 		ABE2F3DE1570B690002E5BA2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1C8DF0EE1573C83400DD140B /* MapKit.framework */,
 				ABE2F3DF1570B690002E5BA2 /* UIKit.framework */,
 				ABE2F3E11570B690002E5BA2 /* Foundation.framework */,
 				ABE2F3E31570B690002E5BA2 /* CoreGraphics.framework */,
