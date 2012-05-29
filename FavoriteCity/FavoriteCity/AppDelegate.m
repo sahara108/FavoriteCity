@@ -40,9 +40,10 @@
     viewController.managedObjectContext = context;
     self.window.rootViewController = navi;
     
-    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window makeKeyAndVisible];
     [viewController release];
+    [navi release];
     return YES;
 }
 

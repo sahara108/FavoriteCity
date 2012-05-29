@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSNumber * log;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * state;
+@property (nonatomic, retain) NSString * url;
 
 @end

@@ -95,6 +95,8 @@
     for(NSDictionary *dictCity in dataSourceCities)
     {
         NSString *name = [dictCity objectForKey:@"name"];
+        name = [name lowercaseString];
+        searchText = [searchText lowercaseString];
         if ([name hasPrefix:searchText]) {
             [self.resultArray addObject:dictCity];
         }
@@ -150,15 +152,24 @@
 //    [self.delegate didAddCity:nil];
     NSDictionary *dictCity = [self.resultArray objectAtIndex:indexPath.row];
     
-    if (!detailViewController) {
-        detailViewController =[[DetailCityViewController alloc]initWithNibName:@"DetailCityViewController" bundle:nil];
+//    if (!detailViewController) {
+//        detailViewController =[[DetailCityViewController alloc]initWithNibName:@"DetailCityViewController" bundle:nil];
+//    }
+//    if (dictCity) {
+//        detailViewController.dictCity = dictCity;
+//        [self.navigationController pushViewController:detailViewController animated:YES];
+//        
+//    }
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSArray *array = [userDefault objectForKey:@"favoriteCities"];
+    if (array) {
+        array = [array arrayByAddingObject:dictCity];
+    }else {
+        array = [NSArray arrayWithObject:dictCity];
     }
-    if (dictCity) {
-        detailViewController.dictCity = dictCity;
-        [self.navigationController pushViewController:detailViewController animated:YES];
-        
-    }
-    
+    [userDefault setObject:array forKey:@"favoriteCities"];
+    [userDefault synchronize];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -25,8 +25,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     if (dictCity) {
-        
-        
         CLLocation *spin = [[CLLocation alloc]initWithLatitude:[[dictCity objectForKey:@"lat"] floatValue] longitude:[[dictCity objectForKey:@"log"] floatValue]];
         
         NSLog(@"%f %f",spin.coordinate.latitude,spin.coordinate.longitude);
@@ -43,7 +41,8 @@
        
         CustomAnnotation *annotation = [[CustomAnnotation alloc]initWithLocation:spin.coordinate description:name address:@""];
         [mapView addAnnotation:annotation];
-        
+        [annotation release];
+        [spin release];
     }
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

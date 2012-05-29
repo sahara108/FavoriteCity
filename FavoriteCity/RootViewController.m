@@ -62,9 +62,20 @@
     // e.g. self.myOutlet = nil;
 }
 
+-(void)cancel:(id)sender
+{
+    [self.tableView setEditing:NO animated:YES];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addCity:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    [addButton release];
+}
+
 -(void)enableEdit:(id)sender
 {
     [self.tableView setEditing:YES animated:YES];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
+    [self.navigationItem setRightBarButtonItem:cancel];
+    [cancel release];
     //TODO:
 }
 -(void) deleteAllCities
@@ -196,6 +207,7 @@
                                       [element lat],@"lat",
                                       [element log],@"log",
                                       [element state],@"state",
+                                      [element url], @"url",
                                       nil];
             [array addObject:dictCity];
         }
@@ -231,7 +243,9 @@
     [self.tableView setEditing:NO animated:YES];
     [self.tableView reloadData];
 
-   
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addCity:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    [addButton release];
 }
  -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView    
 {
@@ -316,6 +330,7 @@
                 [addCity setState:[dictCity objectForKey:@"state_name"]];
                 [addCity setLat:[NSNumber numberWithDouble:t1]];
                 [addCity setLog:[NSNumber numberWithDouble:t2]];
+                [addCity setUrl:[dictCity objectForKey:@"url"]];
                 NSError *error;
                 if (![_managedObjectContext save:&error]) {
                     // Handle the error.

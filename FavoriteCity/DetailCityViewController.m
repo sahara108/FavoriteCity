@@ -18,9 +18,11 @@
 @synthesize mapViewController;
 @synthesize arrayDataFavoriteCities;
 @synthesize btnAdd;
+@synthesize lbUrl;
 
 -(void)dealloc
 {
+    [lbUrl release];
     [btnAdd release];
     [arrayDataFavoriteCities release];
     [mapViewController release];
@@ -60,6 +62,13 @@
     }
    
 }
+
+-(void)openCityUrl:(id)gesture
+{
+    NSString *url = self.lbUrl.text;
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     if (dictCity) {
@@ -69,12 +78,15 @@
         lblLong.text = [NSString stringWithFormat:@"%@",[dictCity objectForKey:@"log"]];
         lblState.text = [dictCity objectForKey:@"state"];
         lblName.text  =[dictCity objectForKey:@"name"];
+        lbUrl.text = [dictCity objectForKey:@"url"];
         if ([arrayDataFavoriteCities containsObject:dictCity]) {
             self.btnAdd.hidden = YES;
         }else {
             self.btnAdd.hidden =  NO;
         }
-        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openCityUrl:)];
+        [self.lbUrl addGestureRecognizer:tap];
+        [tap release];
     }
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -95,6 +107,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
 }
 
 - (void)viewDidUnload

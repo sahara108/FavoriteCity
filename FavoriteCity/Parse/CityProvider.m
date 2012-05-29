@@ -46,8 +46,6 @@
 }
 -(void)configURL
 {
-    
-    NSDate *date = [NSDate date];
     NSDateFormatter *formatter =[[[NSDateFormatter alloc]init]autorelease];
     [formatter setDateFormat:@"YYYYMMdd"];
     NSString *str = @"http://api.sba.gov/geodata/all_data_for_county_of/orange%20county/ca.json";
@@ -141,6 +139,7 @@
                                             [dictCity objectForKey:@"primary_latitude"],@"primary_latitude",
                                             [dictCity objectForKey:@"primary_longitude"],@"primary_longitude",
                                             [dictCity objectForKey:@"state_name"],@"state_name",
+                                            [dictCity objectForKey:@"url"],@"url",
                                             nil];
                 [self.resultContent addObject: dictResult];
             }

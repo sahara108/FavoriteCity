@@ -19,7 +19,9 @@
 @property (nonatomic, retain) MapViewController *mapViewController;
 @property (nonatomic, retain) NSMutableArray *arrayDataFavoriteCities;
 @property (nonatomic, retain) IBOutlet UIButton *btnAdd;
+@property (nonatomic, retain) IBOutlet UILabel *lbUrl;
 
 -(IBAction)viewInMap:(id)sender;
 -(IBAction)addCity:(id)sender;
+-(IBAction)openCityUrl:(id)gesture;
 @end

@@ -15,5 +15,6 @@
 @dynamic log;
 @dynamic name;
 @dynamic state;
+@dynamic url;
 
 @end
