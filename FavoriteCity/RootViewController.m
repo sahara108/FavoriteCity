@@ -145,7 +145,7 @@
 //        
 //
 //    }
-	
+	[self getDataSoureFromCoreData];
     if (dataSourceCities) {
         _addController.dataSourceCities = self.dataSourceCities;
     }
@@ -174,13 +174,26 @@
 }
 -(void)loadNewData
 {
-    if (!_requestFavoriteCity) {
-        _requestFavoriteCity = [[CityProvider alloc]init];
-        _requestFavoriteCity.delegateJson = self;
-    }
     
-    [_requestFavoriteCity configURL];
-    [_requestFavoriteCity requestData];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    BOOL coreDataExist = [[userDefault objectForKey:@"coreDataExist"]boolValue];
+    if (coreDataExist==NO) {
+        NSLog(@"start Download Data...");
+        if (!_requestFavoriteCity) {
+            _requestFavoriteCity = [[CityProvider alloc]init];
+            _requestFavoriteCity.delegateJson = self;
+        }
+        
+        [_requestFavoriteCity configURL];
+        [_requestFavoriteCity requestData];
+        
+    }else {
+        //
+        NSLog(@"coredata exist...");
+    }
+
+    
+   
 }
 -(void) getDataSoureFromCoreData
 {
@@ -342,6 +355,14 @@
         }
         [self getDataSoureFromCoreData];
         [self.tableView reloadData];
+        
+        
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        BOOL coreDataExist = [[userDefault objectForKey:@"coreDataExist"]boolValue];
+        coreDataExist = YES;
+        
+        [userDefault setObject:[NSNumber numberWithBool:coreDataExist] forKey:@"coreDataExist"];
+        [userDefault synchronize];
         
         
         

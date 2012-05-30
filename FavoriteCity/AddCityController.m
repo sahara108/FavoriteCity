@@ -71,9 +71,11 @@
     [super viewWillAppear:animated];
     if (self.resultArray) {
         [self.resultArray removeAllObjects];
+        
     }
     [self.searchBar becomeFirstResponder];
     [self setTitle:_nameTest];
+    [self.tableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -163,13 +165,17 @@
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     NSArray *array = [userDefault objectForKey:@"favoriteCities"];
     if (array) {
-        array = [array arrayByAddingObject:dictCity];
+        if (![array containsObject:dictCity]) {
+            array = [array arrayByAddingObject:dictCity];
+
+        }
     }else {
         array = [NSArray arrayWithObject:dictCity];
     }
     [userDefault setObject:array forKey:@"favoriteCities"];
     [userDefault synchronize];
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 @end
